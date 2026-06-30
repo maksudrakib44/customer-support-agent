@@ -2,6 +2,8 @@
 .env
 .env.local
 .env.*.local
+*.env
+!.env.example
 
 # Python
 __pycache__/
@@ -9,11 +11,25 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+*.py[cod]
+*$py.class
 venv/
 env/
 .venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
 .idea/
 .vscode/
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
 
 # Logs
 *.log
