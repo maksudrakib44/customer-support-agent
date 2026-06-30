@@ -5,15 +5,6 @@ from config import settings
 
 logger = logging.getLogger(__name__)
 
-# We need to import settings from root. 
-# Wait, root config is at project root, but we use `from config import settings`.
-# Since main.py is at root, and app/core is subdir, we need relative or absolute.
-# Let's use absolute import from root.
-import sys
-from pathlib import Path
-sys.path.append(str(Path(__file__).parent.parent.parent))
-from config import settings
-
 class BackendClient:
     def __init__(self):
         self.base_url = settings.BACKEND_BASE_URL.rstrip('/')

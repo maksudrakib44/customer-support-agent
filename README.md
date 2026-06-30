@@ -2,7 +2,7 @@
 
 ## 📖 Project Overview
 
-This is a **production‑ready AI customer support agent** built for **Billigpropel.dk** and **YamahaReservedele.dk**. It uses OpenAI’s GPT‑4o to autonomously handle first‑line customer inquiries via a chat popup or contact form. The agent is **stateless** and relies on a backend API for all data (orders, stock, products, shipping, and conversation history). If the AI cannot answer a query, it forwards the conversation to the existing OSS system (`oss.bluebay-marine.com`).
+This is a **production-ready AI customer support agent** built for **NorthDock** and **MarineX Parts**, two fictional test stores. It uses OpenAI's GPT-4o to autonomously handle first-line customer inquiries via a chat popup or contact form. The agent is **stateless** and relies on a backend API for all data (orders, stock, products, shipping, and conversation history). If the AI cannot answer a query, it forwards the conversation to a mock support system.
 
 ---
 
@@ -13,7 +13,7 @@ This is a **production‑ready AI customer support agent** built for **Billigpro
 | **AI‑powered chat** | Handles customer questions naturally, using 7 specialised tools. |
 | **Order status** | Retrieves real‑time delivery/shipping information. |
 | **Stock availability** | Checks product inventory and restock dates. |
-| **Product search** | Searches across both `billigpropel.dk` and `yamahareservedele.dk`. |
+| **Product search** | Searches across both `northdock` and `marinexparts`. |
 | **Shipping estimates** | Provides delivery time and cost estimates. |
 | **Human handover** | Escalates complex queries to OSS with ticket creation. |
 | **Case management** | Automatically closes resolved cases and reopens when customers return. |
@@ -172,7 +172,7 @@ All endpoints require the `Authorization: Bearer <API_KEY>` header (except healt
 {
   "message": "Where is my order?",
   "email": "john@example.com",
-  "site": "billigpropel"
+  "site": "northdock"
 }
 ```
 **Response:**
@@ -212,12 +212,12 @@ All supporting endpoints are **proxy endpoints** that forward calls to the backe
 curl -X POST http://localhost:8000/chat/message \
   -H "Authorization: Bearer test123" \
   -H "Content-Type: application/json" \
-  -d '{"message":"Where is my order?","email":"john@example.com","site":"billigpropel"}'
+  -d '{"message":"Where is my order?","email":"john@example.com","site":"northdock"}'
 ```
 
 ### Using PowerShell (Windows)
 ```powershell
-$body = @{message="Where is my order?"; email="john@example.com"; site="billigpropel"} | ConvertTo-Json
+$body = @{message="Where is my order?"; email="john@example.com"; site="northdock"} | ConvertTo-Json
 Invoke-RestMethod -Uri "http://localhost:8000/chat/message" -Method Post -Headers @{Authorization="Bearer test123"} -Body $body -ContentType "application/json"
 ```
 
@@ -242,8 +242,9 @@ For advanced deployments (e.g., Kubernetes), use the provided `Dockerfile` and a
 ## 🧑‍💻 Developer Notes
 
 - **Agent logic** resides in `app/core/agent.py` – this is the core ReAct loop.
-- **Adding a new tool**: Define it in `app/core/tools/definitions.py`, create a handler in `app/core/tools/`, and register it in the `tool_handlers` dict in `agent.py`.
+- **Adding a new tool**: Define its schema in `app/core/tool_definitions.py`, add the handler in `app/core/agent_tools.py`, and register it in the `tool_handlers` dict in `agent.py`.
 - **Adding a new endpoint**: Create a new folder under `app/` with `request.py`, `router.py`, and `service.py`. Import the router in `main.py`.
 - **Mock data** is stored in `mock_backend/dummy_data.py` – update it to match your real data structure.
+- **Streamlit test console** runs from `frontend/streamlit_app.py` after the main API and mock backend are running.
 
 ---

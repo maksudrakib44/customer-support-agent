@@ -12,7 +12,7 @@ class Product(BaseModel):
 
 class SearchRequest(BaseModel):
     query: str
-    site: str  # 'billigpropel' or 'yamahareservedele'
+    site: str  # 'northdock' or 'marinexparts'
 
 class SearchResponse(BaseModel):
     products: List[Product]

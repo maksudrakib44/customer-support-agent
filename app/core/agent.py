@@ -5,9 +5,9 @@ from typing import Dict, Any
 from openai import AsyncOpenAI
 from config import settings
 from app.core.prompts import SYSTEM_PROMPT
-from app.core.tools.definitions import TOOL_DEFINITIONS
+from app.core.tool_definitions import TOOL_DEFINITIONS
 from app.core.backend_client import backend_client
-from app.core.tools import order, stock, search, shipping, human, case
+from app.core import agent_tools
 from app.core.common_utils import generate_conversation_id
 
 logger = logging.getLogger(__name__)
@@ -16,13 +16,13 @@ class Agent:
     def __init__(self):
         self.client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
         self.tool_handlers = {
-            "get_order_status": order.handle_get_order_status,
-            "check_stock": stock.handle_check_stock,
-            "search_products": search.handle_search_products,
-            "estimate_shipping": shipping.handle_estimate_shipping,
-            "forward_to_human": human.handle_forward_to_human,
-            "close_case": case.handle_close_case,
-            "reopen_case": case.handle_reopen_case,
+            "get_order_status": agent_tools.handle_get_order_status,
+            "check_stock": agent_tools.handle_check_stock,
+            "search_products": agent_tools.handle_search_products,
+            "estimate_shipping": agent_tools.handle_estimate_shipping,
+            "forward_to_human": agent_tools.handle_forward_to_human,
+            "close_case": agent_tools.handle_close_case,
+            "reopen_case": agent_tools.handle_reopen_case,
         }
         self.max_iterations = 5
 
@@ -77,7 +77,7 @@ class Agent:
         
         if not final_answer:
             final_answer = "I'm having trouble. Let me forward you to a human."
-            await human.handle_forward_to_human({"reason": "Max iterations"}, email=email)
+            await agent_tools.handle_forward_to_human({"reason": "Max iterations"}, email=email)
         
         await backend_client.log_conversation(
             conversation_id=conversation_id,

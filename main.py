@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="AI Support Agent",
-    description="Intelligent customer support for Billigpropel.dk & YamahaReservedele.dk",
+    description="Intelligent customer support for NorthDock and MarineX Parts",
     version="1.0.0",
     lifespan=lifespan
 )

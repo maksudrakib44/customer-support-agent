@@ -9,16 +9,16 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "order_number": {
                         "type": "string",
-                        "description": "The order number provided by the customer"
+                        "description": "The order number provided by the customer",
                     },
                     "email": {
                         "type": "string",
-                        "description": "Customer email address for verification (optional)"
-                    }
+                        "description": "Customer email address for verification (optional)",
+                    },
                 },
-                "required": ["order_number"]
-            }
-        }
+                "required": ["order_number"],
+            },
+        },
     },
     {
         "type": "function",
@@ -30,34 +30,34 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "product_sku": {
                         "type": "string",
-                        "description": "The product SKU (e.g., YAM-F115, YAM-SKIT-01)"
+                        "description": "The product SKU (e.g., NDX-115, MX-SKIT-01)",
                     }
                 },
-                "required": ["product_sku"]
-            }
-        }
+                "required": ["product_sku"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "search_products",
-            "description": "Search for products on Billigpropel.dk or YamahaReservedele.dk. Use this when customer asks for recommendations or wants to find specific products.",
+            "description": "Search for products on NorthDock or MarineX Parts. Use this when customer asks for recommendations or wants to find specific products.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "query": {
                         "type": "string",
-                        "description": "The search query (e.g., propeller, service kit, Yamaha 115)"
+                        "description": "The search query (e.g., propeller, service kit, AquaDrive 115)",
                     },
                     "site": {
                         "type": "string",
-                        "enum": ["billigpropel", "yamahareservedele"],
-                        "description": "Which site to search. Use billigpropel for main products, yamahareservedele for Yamaha parts."
-                    }
+                        "enum": ["northdock", "marinexparts"],
+                        "description": "Which site to search. Use northdock for main products, marinexparts for replacement parts.",
+                    },
                 },
-                "required": ["query", "site"]
-            }
-        }
+                "required": ["query", "site"],
+            },
+        },
     },
     {
         "type": "function",
@@ -70,20 +70,20 @@ TOOL_DEFINITIONS = [
                     "product_ids": {
                         "type": "array",
                         "items": {"type": "string"},
-                        "description": "List of product IDs to estimate shipping for"
+                        "description": "List of product IDs to estimate shipping for",
                     },
                     "postal_code": {
                         "type": "string",
-                        "description": "Customer postal code"
+                        "description": "Customer postal code",
                     },
                     "country": {
                         "type": "string",
-                        "description": "Customer country code (e.g., DK)"
-                    }
+                        "description": "Customer country code (e.g., DK)",
+                    },
                 },
-                "required": ["product_ids", "postal_code", "country"]
-            }
-        }
+                "required": ["product_ids", "postal_code", "country"],
+            },
+        },
     },
     {
         "type": "function",
@@ -95,33 +95,27 @@ TOOL_DEFINITIONS = [
                 "properties": {
                     "reason": {
                         "type": "string",
-                        "description": "Reason for forwarding to human"
+                        "description": "Reason for forwarding to human",
                     }
                 },
-                "required": ["reason"]
-            }
-        }
+                "required": ["reason"],
+            },
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "close_case",
             "description": "Close the support case after successful resolution. Call this when the customer's question has been fully answered.",
-            "parameters": {
-                "type": "object",
-                "properties": {}
-            }
-        }
+            "parameters": {"type": "object", "properties": {}},
+        },
     },
     {
         "type": "function",
         "function": {
             "name": "reopen_case",
             "description": "Reopen a previously closed case. Call this when a customer with a closed case sends a new message.",
-            "parameters": {
-                "type": "object",
-                "properties": {}
-            }
-        }
-    }
+            "parameters": {"type": "object", "properties": {}},
+        },
+    },
 ]
